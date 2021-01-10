@@ -5,8 +5,11 @@
  */
 package io.swagger.api;
 
+import io.swagger.model.Beer;
 import io.swagger.model.BeerPagedList;
+import io.swagger.model.Customer;
 import io.swagger.model.CustomerPagedList;
+import java.util.UUID;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -33,8 +36,17 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-01-10T11:06:18.163Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-01-10T12:00:14.681Z[GMT]")
 public interface V1Api {
+
+    @Operation(summary = "", description = "", tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "Beer Found", content = @Content(schema = @Schema(implementation = Beer.class))) })
+    @RequestMapping(value = "/v1/beers/{beerId}",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<Beer> v1BeersBeerIdGet(@Parameter(in = ParameterIn.PATH, description = "Beer Id", required=true, schema=@Schema()) @PathVariable("beerId") UUID beerId);
+
 
     @Operation(summary = "", description = "", tags={  })
     @ApiResponses(value = { 
@@ -44,7 +56,16 @@ public interface V1Api {
     @RequestMapping(value = "/v1/beers",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<BeerPagedList> v1BeersGet();
+    ResponseEntity<BeerPagedList> v1BeersGet(@Parameter(in = ParameterIn.QUERY, description = "Page Number" ,schema=@Schema(, defaultValue="1")) @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") Integer pageNumber, @Parameter(in = ParameterIn.QUERY, description = "Page Size" ,schema=@Schema(, defaultValue="25")) @Valid @RequestParam(value = "pageSize", required = false, defaultValue="25") Integer pageSize);
+
+
+    @Operation(summary = "", description = "", tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "Found Customer", content = @Content(schema = @Schema(implementation = Customer.class))) })
+    @RequestMapping(value = "/v1/customers/{customerId}",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<Customer> v1CustomersCustomerIdGet(@Parameter(in = ParameterIn.PATH, description = "Customer Id", required=true, schema=@Schema()) @PathVariable("customerId") UUID customerId);
 
 
     @Operation(summary = "", description = "", tags={  })
@@ -53,7 +74,7 @@ public interface V1Api {
     @RequestMapping(value = "/v1/customers",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<CustomerPagedList> v1CustomersGet();
+    ResponseEntity<CustomerPagedList> v1CustomersGet(@Parameter(in = ParameterIn.QUERY, description = "Page Number" ,schema=@Schema(, defaultValue="1")) @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") Integer pageNumber, @Parameter(in = ParameterIn.QUERY, description = "Page Size" ,schema=@Schema(, defaultValue="25")) @Valid @RequestParam(value = "pageSize", required = false, defaultValue="25") Integer pageSize);
 
 }
 
