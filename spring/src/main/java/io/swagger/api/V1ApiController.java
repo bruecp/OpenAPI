@@ -1,7 +1,10 @@
 package io.swagger.api;
 
+import io.swagger.model.Beer;
 import io.swagger.model.BeerPagedList;
+import io.swagger.model.Customer;
 import io.swagger.model.CustomerPagedList;
+import java.util.UUID;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,7 +35,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-01-10T11:06:18.163Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-01-10T12:00:14.681Z[GMT]")
 @RestController
 public class V1ApiController implements V1Api {
 
@@ -48,7 +51,21 @@ public class V1ApiController implements V1Api {
         this.request = request;
     }
 
-    public ResponseEntity<BeerPagedList> v1BeersGet() {
+    public ResponseEntity<Beer> v1BeersBeerIdGet(@Parameter(in = ParameterIn.PATH, description = "Beer Id", required=true, schema=@Schema()) @PathVariable("beerId") UUID beerId) {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                return new ResponseEntity<Beer>(objectMapper.readValue("{\n  \"beerName\" : \"beerName\",\n  \"price\" : 0.8008282,\n  \"quantityOnHand\" : 6,\n  \"brewery\" : {\n    \"name\" : \"name\",\n    \"location\" : \"location\"\n  },\n  \"style\" : \"ALE\"\n}", Beer.class), HttpStatus.NOT_IMPLEMENTED);
+            } catch (IOException e) {
+                log.error("Couldn't serialize response for content type application/json", e);
+                return new ResponseEntity<Beer>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        return new ResponseEntity<Beer>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<BeerPagedList> v1BeersGet(@Parameter(in = ParameterIn.QUERY, description = "Page Number" ,schema=@Schema(, defaultValue="1")) @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") Integer pageNumber,@Parameter(in = ParameterIn.QUERY, description = "Page Size" ,schema=@Schema(, defaultValue="25")) @Valid @RequestParam(value = "pageSize", required = false, defaultValue="25") Integer pageSize) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -62,7 +79,21 @@ public class V1ApiController implements V1Api {
         return new ResponseEntity<BeerPagedList>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<CustomerPagedList> v1CustomersGet() {
+    public ResponseEntity<Customer> v1CustomersCustomerIdGet(@Parameter(in = ParameterIn.PATH, description = "Customer Id", required=true, schema=@Schema()) @PathVariable("customerId") UUID customerId) {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                return new ResponseEntity<Customer>(objectMapper.readValue("{\n  \"firstName\" : \"John\",\n  \"lastName\" : \"Thompson\",\n  \"address\" : {\n    \"zipCode\" : \"33701\",\n    \"city\" : \"St Pete\",\n    \"stateCode\" : \"AL\",\n    \"line1\" : \"123 main\"\n  },\n  \"id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\"\n}", Customer.class), HttpStatus.NOT_IMPLEMENTED);
+            } catch (IOException e) {
+                log.error("Couldn't serialize response for content type application/json", e);
+                return new ResponseEntity<Customer>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        return new ResponseEntity<Customer>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<CustomerPagedList> v1CustomersGet(@Parameter(in = ParameterIn.QUERY, description = "Page Number" ,schema=@Schema(, defaultValue="1")) @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") Integer pageNumber,@Parameter(in = ParameterIn.QUERY, description = "Page Size" ,schema=@Schema(, defaultValue="25")) @Valid @RequestParam(value = "pageSize", required = false, defaultValue="25") Integer pageSize) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
