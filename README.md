@@ -1,7 +1,7 @@
-"# OpenAPI" 
-SCM of the envolving OpenAPI Specification from the course Open API Beginner to Guru.
+# OpenAPI 
+SCM of the envolving OpenAPI Specification from the course **Open API Beginner to Guru**.
 
-# Kurs Link
+## Kurs Link
 https://www.udemy.com/share/102igmCEQScV5RQw==/
 https://www.udemy.com/course/openapi-beginner-to-guru/learn/lecture/17105342#overview
 
