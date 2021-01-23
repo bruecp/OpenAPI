@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.model.Brewery;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.UUID;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -15,10 +16,13 @@ import javax.validation.constraints.*;
  */
 @Schema(description = "Beer Object")
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-01-10T12:00:14.681Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-01-23T11:39:49.576Z[GMT]")
 
 
 public class Beer   {
+  @JsonProperty("id")
+  private UUID id = null;
+
   @JsonProperty("beerName")
   private String beerName = null;
 
@@ -69,6 +73,26 @@ public class Beer   {
 
   @JsonProperty("brewery")
   private Brewery brewery = null;
+
+  public Beer id(UUID id) {
+    this.id = id;
+    return this;
+  }
+
+  /**
+   * Get id
+   * @return id
+   **/
+  @Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "")
+  
+    @Valid
+    public UUID getId() {
+    return id;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
+  }
 
   public Beer beerName(String beerName) {
     this.beerName = beerName;
@@ -176,7 +200,8 @@ public class Beer   {
       return false;
     }
     Beer beer = (Beer) o;
-    return Objects.equals(this.beerName, beer.beerName) &&
+    return Objects.equals(this.id, beer.id) &&
+        Objects.equals(this.beerName, beer.beerName) &&
         Objects.equals(this.style, beer.style) &&
         Objects.equals(this.price, beer.price) &&
         Objects.equals(this.quantityOnHand, beer.quantityOnHand) &&
@@ -185,7 +210,7 @@ public class Beer   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(beerName, style, price, quantityOnHand, brewery);
+    return Objects.hash(id, beerName, style, price, quantityOnHand, brewery);
   }
 
   @Override
@@ -193,6 +218,7 @@ public class Beer   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Beer {\n");
     
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    beerName: ").append(toIndentedString(beerName)).append("\n");
     sb.append("    style: ").append(toIndentedString(style)).append("\n");
     sb.append("    price: ").append(toIndentedString(price)).append("\n");

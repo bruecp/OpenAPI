@@ -1,6 +1,7 @@
 package io.swagger.api;
 
 import io.swagger.model.Beer;
+import io.swagger.model.BeerOrder;
 import io.swagger.model.BeerPagedList;
 import io.swagger.model.Customer;
 import io.swagger.model.CustomerPagedList;
@@ -35,7 +36,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-01-10T12:00:14.681Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-01-23T11:39:49.576Z[GMT]")
 @RestController
 public class V1ApiController implements V1Api {
 
@@ -51,11 +52,31 @@ public class V1ApiController implements V1Api {
         this.request = request;
     }
 
-    public ResponseEntity<Beer> v1BeersBeerIdGet(@Parameter(in = ParameterIn.PATH, description = "Beer Id", required=true, schema=@Schema()) @PathVariable("beerId") UUID beerId) {
+    public ResponseEntity<Void> createBeerV1(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Beer body) {
+        String accept = request.getHeader("Accept");
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<Void> createCustomerV1(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Customer body) {
+        String accept = request.getHeader("Accept");
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<Void> deleteBeerByIdV1(@Parameter(in = ParameterIn.PATH, description = "Beer Id", required=true, schema=@Schema()) @PathVariable("beerId") UUID beerId) {
+        String accept = request.getHeader("Accept");
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<Void> deleteCustomerByIdV1(@Parameter(in = ParameterIn.PATH, description = "Customer Id", required=true, schema=@Schema()) @PathVariable("customerId") UUID customerId) {
+        String accept = request.getHeader("Accept");
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<Beer> getBeerByIdV1(@Parameter(in = ParameterIn.PATH, description = "Beer Id", required=true, schema=@Schema()) @PathVariable("beerId") UUID beerId) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Beer>(objectMapper.readValue("{\n  \"beerName\" : \"beerName\",\n  \"price\" : 0.8008282,\n  \"quantityOnHand\" : 6,\n  \"brewery\" : {\n    \"name\" : \"name\",\n    \"location\" : \"location\"\n  },\n  \"style\" : \"ALE\"\n}", Beer.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<Beer>(objectMapper.readValue("{\n  \"beerName\" : \"beerName\",\n  \"price\" : 0.8008282,\n  \"quantityOnHand\" : 6,\n  \"brewery\" : {\n    \"name\" : \"name\",\n    \"location\" : \"location\"\n  },\n  \"style\" : \"ALE\",\n  \"id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\"\n}", Beer.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<Beer>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -65,21 +86,7 @@ public class V1ApiController implements V1Api {
         return new ResponseEntity<Beer>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<BeerPagedList> v1BeersGet(@Parameter(in = ParameterIn.QUERY, description = "Page Number" ,schema=@Schema(, defaultValue="1")) @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") Integer pageNumber,@Parameter(in = ParameterIn.QUERY, description = "Page Size" ,schema=@Schema(, defaultValue="25")) @Valid @RequestParam(value = "pageSize", required = false, defaultValue="25") Integer pageSize) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<BeerPagedList>(objectMapper.readValue("{\n  \"content\" : [ {\n    \"beerName\" : \"beerName\",\n    \"price\" : 0.8008282,\n    \"quantityOnHand\" : 6,\n    \"brewery\" : {\n      \"name\" : \"name\",\n      \"location\" : \"location\"\n    },\n    \"style\" : \"ALE\"\n  }, {\n    \"beerName\" : \"beerName\",\n    \"price\" : 0.8008282,\n    \"quantityOnHand\" : 6,\n    \"brewery\" : {\n      \"name\" : \"name\",\n      \"location\" : \"location\"\n    },\n    \"style\" : \"ALE\"\n  } ]\n}", BeerPagedList.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<BeerPagedList>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        return new ResponseEntity<BeerPagedList>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    public ResponseEntity<Customer> v1CustomersCustomerIdGet(@Parameter(in = ParameterIn.PATH, description = "Customer Id", required=true, schema=@Schema()) @PathVariable("customerId") UUID customerId) {
+    public ResponseEntity<Customer> getCustomerByIdV1(@Parameter(in = ParameterIn.PATH, description = "Customer Id", required=true, schema=@Schema()) @PathVariable("customerId") UUID customerId) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -93,7 +100,21 @@ public class V1ApiController implements V1Api {
         return new ResponseEntity<Customer>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<CustomerPagedList> v1CustomersGet(@Parameter(in = ParameterIn.QUERY, description = "Page Number" ,schema=@Schema(, defaultValue="1")) @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") Integer pageNumber,@Parameter(in = ParameterIn.QUERY, description = "Page Size" ,schema=@Schema(, defaultValue="25")) @Valid @RequestParam(value = "pageSize", required = false, defaultValue="25") Integer pageSize) {
+    public ResponseEntity<BeerPagedList> listBeersV1(@Parameter(in = ParameterIn.QUERY, description = "Page Number" ,schema=@Schema(, defaultValue="1")) @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") Integer pageNumber,@Parameter(in = ParameterIn.QUERY, description = "Page Size" ,schema=@Schema(, defaultValue="25")) @Valid @RequestParam(value = "pageSize", required = false, defaultValue="25") Integer pageSize) {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                return new ResponseEntity<BeerPagedList>(objectMapper.readValue("{\n  \"content\" : [ {\n    \"beerName\" : \"beerName\",\n    \"price\" : 0.8008282,\n    \"quantityOnHand\" : 6,\n    \"brewery\" : {\n      \"name\" : \"name\",\n      \"location\" : \"location\"\n    },\n    \"style\" : \"ALE\",\n    \"id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\"\n  }, {\n    \"beerName\" : \"beerName\",\n    \"price\" : 0.8008282,\n    \"quantityOnHand\" : 6,\n    \"brewery\" : {\n      \"name\" : \"name\",\n      \"location\" : \"location\"\n    },\n    \"style\" : \"ALE\",\n    \"id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\"\n  } ]\n}", BeerPagedList.class), HttpStatus.NOT_IMPLEMENTED);
+            } catch (IOException e) {
+                log.error("Couldn't serialize response for content type application/json", e);
+                return new ResponseEntity<BeerPagedList>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        return new ResponseEntity<BeerPagedList>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<CustomerPagedList> listCustomerV1(@Parameter(in = ParameterIn.QUERY, description = "Page Number" ,schema=@Schema(, defaultValue="1")) @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") Integer pageNumber,@Parameter(in = ParameterIn.QUERY, description = "Page Size" ,schema=@Schema(, defaultValue="25")) @Valid @RequestParam(value = "pageSize", required = false, defaultValue="25") Integer pageSize) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -105,6 +126,21 @@ public class V1ApiController implements V1Api {
         }
 
         return new ResponseEntity<CustomerPagedList>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<Void> updateBeerByIdV1(@Parameter(in = ParameterIn.PATH, description = "Beer Id", required=true, schema=@Schema()) @PathVariable("beerId") UUID beerId,@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Beer body) {
+        String accept = request.getHeader("Accept");
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<Void> updateCustomerByIdV1(@Parameter(in = ParameterIn.PATH, description = "Customer Id", required=true, schema=@Schema()) @PathVariable("customerId") UUID customerId,@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Customer body) {
+        String accept = request.getHeader("Accept");
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<Void> v1CustomersCustomerIdOrdersPost(@Parameter(in = ParameterIn.PATH, description = "Customer Id", required=true, schema=@Schema()) @PathVariable("customerId") UUID customerId,@Parameter(in = ParameterIn.DEFAULT, description = "", schema=@Schema()) @Valid @RequestBody BeerOrder body) {
+        String accept = request.getHeader("Accept");
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }
