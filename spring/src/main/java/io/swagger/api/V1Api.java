@@ -6,6 +6,7 @@
 package io.swagger.api;
 
 import io.swagger.model.Beer;
+import io.swagger.model.BeerOrder;
 import io.swagger.model.BeerPagedList;
 import io.swagger.model.Customer;
 import io.swagger.model.CustomerPagedList;
@@ -36,45 +37,160 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-01-10T12:00:14.681Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-01-23T11:39:49.576Z[GMT]")
 public interface V1Api {
 
-    @Operation(summary = "", description = "", tags={  })
+    @Operation(summary = "New Beer", description = "Create a new Beer", security = {
+        @SecurityRequirement(name = "BasicAuth"),
+@SecurityRequirement(name = "JwtAuthToken")    }, tags={ "Beers" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Beer Found", content = @Content(schema = @Schema(implementation = Beer.class))) })
+        @ApiResponse(responseCode = "201", description = "Beer Created"),
+        
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        
+        @ApiResponse(responseCode = "409", description = "Conflict") })
+    @RequestMapping(value = "/v1/beers",
+        consumes = { "application/json" }, 
+        method = RequestMethod.POST)
+    ResponseEntity<Void> createBeerV1(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Beer body);
+
+
+    @Operation(summary = "New Customer", description = "Create a new Customer", security = {
+        @SecurityRequirement(name = "BasicAuth"),
+@SecurityRequirement(name = "JwtAuthToken")    }, tags={ "Customers" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "201", description = "Customer Created"),
+        
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        
+        @ApiResponse(responseCode = "409", description = "Conflict") })
+    @RequestMapping(value = "/v1/customers",
+        consumes = { "application/json" }, 
+        method = RequestMethod.POST)
+    ResponseEntity<Void> createCustomerV1(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Customer body);
+
+
+    @Operation(summary = "Delete Beer", description = "Delete beer by id", security = {
+        @SecurityRequirement(name = "BasicAuth"),
+@SecurityRequirement(name = "JwtAuthToken")    }, tags={ "Beers" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "Beer Deleted"),
+        
+        @ApiResponse(responseCode = "404", description = "Not Found") })
+    @RequestMapping(value = "/v1/beers/{beerId}",
+        method = RequestMethod.DELETE)
+    ResponseEntity<Void> deleteBeerByIdV1(@Parameter(in = ParameterIn.PATH, description = "Beer Id", required=true, schema=@Schema()) @PathVariable("beerId") UUID beerId);
+
+
+    @Operation(summary = "Delete Customer By Id", description = "Delete a customer by its Id value", security = {
+        @SecurityRequirement(name = "BasicAuth"),
+@SecurityRequirement(name = "JwtAuthToken")    }, tags={ "Customers" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "Customer Deleted"),
+        
+        @ApiResponse(responseCode = "404", description = "Not Found") })
+    @RequestMapping(value = "/v1/customers/{customerId}",
+        method = RequestMethod.DELETE)
+    ResponseEntity<Void> deleteCustomerByIdV1(@Parameter(in = ParameterIn.PATH, description = "Customer Id", required=true, schema=@Schema()) @PathVariable("customerId") UUID customerId);
+
+
+    @Operation(summary = "Get Beer By Id", description = "Get a single **Beer** by its Id value", security = {
+        @SecurityRequirement(name = "BasicAuth"),
+@SecurityRequirement(name = "JwtAuthToken")    }, tags={ "Beers" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "Beer Found", content = @Content(schema = @Schema(implementation = Beer.class))),
+        
+        @ApiResponse(responseCode = "404", description = "Not Found") })
     @RequestMapping(value = "/v1/beers/{beerId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Beer> v1BeersBeerIdGet(@Parameter(in = ParameterIn.PATH, description = "Beer Id", required=true, schema=@Schema()) @PathVariable("beerId") UUID beerId);
+    ResponseEntity<Beer> getBeerByIdV1(@Parameter(in = ParameterIn.PATH, description = "Beer Id", required=true, schema=@Schema()) @PathVariable("beerId") UUID beerId);
 
 
-    @Operation(summary = "", description = "", tags={  })
+    @Operation(summary = "Get Customer By Id", description = "Get a single **Customer** by its Id value", tags={ "Customers" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "List of Beers", content = @Content(schema = @Schema(implementation = BeerPagedList.class))),
+        @ApiResponse(responseCode = "200", description = "Found Customer", content = @Content(schema = @Schema(implementation = Customer.class))),
         
-        @ApiResponse(responseCode = "404", description = "No Beers Found") })
-    @RequestMapping(value = "/v1/beers",
-        produces = { "application/json" }, 
-        method = RequestMethod.GET)
-    ResponseEntity<BeerPagedList> v1BeersGet(@Parameter(in = ParameterIn.QUERY, description = "Page Number" ,schema=@Schema(, defaultValue="1")) @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") Integer pageNumber, @Parameter(in = ParameterIn.QUERY, description = "Page Size" ,schema=@Schema(, defaultValue="25")) @Valid @RequestParam(value = "pageSize", required = false, defaultValue="25") Integer pageSize);
-
-
-    @Operation(summary = "", description = "", tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Found Customer", content = @Content(schema = @Schema(implementation = Customer.class))) })
+        @ApiResponse(responseCode = "404", description = "Not Found") })
     @RequestMapping(value = "/v1/customers/{customerId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Customer> v1CustomersCustomerIdGet(@Parameter(in = ParameterIn.PATH, description = "Customer Id", required=true, schema=@Schema()) @PathVariable("customerId") UUID customerId);
+    ResponseEntity<Customer> getCustomerByIdV1(@Parameter(in = ParameterIn.PATH, description = "Customer Id", required=true, schema=@Schema()) @PathVariable("customerId") UUID customerId);
 
 
-    @Operation(summary = "", description = "", tags={  })
+    @Operation(summary = "List Beers", description = "Get a list of Beers", security = {
+        @SecurityRequirement(name = "BasicAuth"),
+@SecurityRequirement(name = "JwtAuthToken")    }, tags={ "Beers" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "List of Customers", content = @Content(schema = @Schema(implementation = CustomerPagedList.class))) })
+        @ApiResponse(responseCode = "200", description = "List of Beers", content = @Content(schema = @Schema(implementation = BeerPagedList.class))),
+        
+        @ApiResponse(responseCode = "404", description = "Not Found") })
+    @RequestMapping(value = "/v1/beers",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<BeerPagedList> listBeersV1(@Parameter(in = ParameterIn.QUERY, description = "Page Number" ,schema=@Schema(, defaultValue="1")) @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") Integer pageNumber, @Parameter(in = ParameterIn.QUERY, description = "Page Size" ,schema=@Schema(, defaultValue="25")) @Valid @RequestParam(value = "pageSize", required = false, defaultValue="25") Integer pageSize);
+
+
+    @Operation(summary = "List Customers", description = "Get a list of customers", tags={ "Customers" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "List of Customers", content = @Content(schema = @Schema(implementation = CustomerPagedList.class))),
+        
+        @ApiResponse(responseCode = "404", description = "Not Found") })
     @RequestMapping(value = "/v1/customers",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<CustomerPagedList> v1CustomersGet(@Parameter(in = ParameterIn.QUERY, description = "Page Number" ,schema=@Schema(, defaultValue="1")) @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") Integer pageNumber, @Parameter(in = ParameterIn.QUERY, description = "Page Size" ,schema=@Schema(, defaultValue="25")) @Valid @RequestParam(value = "pageSize", required = false, defaultValue="25") Integer pageSize);
+    ResponseEntity<CustomerPagedList> listCustomerV1(@Parameter(in = ParameterIn.QUERY, description = "Page Number" ,schema=@Schema(, defaultValue="1")) @Valid @RequestParam(value = "pageNumber", required = false, defaultValue="1") Integer pageNumber, @Parameter(in = ParameterIn.QUERY, description = "Page Size" ,schema=@Schema(, defaultValue="25")) @Valid @RequestParam(value = "pageSize", required = false, defaultValue="25") Integer pageSize);
+
+
+    @Operation(summary = "Update Beer", description = "Update beer by id", security = {
+        @SecurityRequirement(name = "BasicAuth"),
+@SecurityRequirement(name = "JwtAuthToken")    }, tags={ "Beers" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "204", description = "Beer Updated"),
+        
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        
+        @ApiResponse(responseCode = "404", description = "Not Found"),
+        
+        @ApiResponse(responseCode = "409", description = "Conflict") })
+    @RequestMapping(value = "/v1/beers/{beerId}",
+        consumes = { "application/json" }, 
+        method = RequestMethod.PUT)
+    ResponseEntity<Void> updateBeerByIdV1(@Parameter(in = ParameterIn.PATH, description = "Beer Id", required=true, schema=@Schema()) @PathVariable("beerId") UUID beerId, @Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Beer body);
+
+
+    @Operation(summary = "Update Customer", description = "Update customer by id", security = {
+        @SecurityRequirement(name = "BasicAuth"),
+@SecurityRequirement(name = "JwtAuthToken")    }, tags={ "Customers" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "204", description = "Customer Updated"),
+        
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        
+        @ApiResponse(responseCode = "404", description = "Not Found"),
+        
+        @ApiResponse(responseCode = "409", description = "Conflict") })
+    @RequestMapping(value = "/v1/customers/{customerId}",
+        consumes = { "application/json" }, 
+        method = RequestMethod.PUT)
+    ResponseEntity<Void> updateCustomerByIdV1(@Parameter(in = ParameterIn.PATH, description = "Customer Id", required=true, schema=@Schema()) @PathVariable("customerId") UUID customerId, @Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Customer body);
+
+
+    @Operation(summary = "", description = "Place Order", security = {
+        @SecurityRequirement(name = "BasicAuth"),
+@SecurityRequirement(name = "JwtAuthToken")    }, tags={ "Order Service" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "201", description = "Order Created"),
+        
+        @ApiResponse(responseCode = "400", description = "Bad Reqeust"),
+        
+        @ApiResponse(responseCode = "404", description = "Not Found"),
+        
+        @ApiResponse(responseCode = "409", description = "Conflict") })
+    @RequestMapping(value = "/v1/customers/{customerId}/orders",
+        consumes = { "application/json" }, 
+        method = RequestMethod.POST)
+    ResponseEntity<Void> v1CustomersCustomerIdOrdersPost(@Parameter(in = ParameterIn.PATH, description = "Customer Id", required=true, schema=@Schema()) @PathVariable("customerId") UUID customerId, @Parameter(in = ParameterIn.DEFAULT, description = "", schema=@Schema()) @Valid @RequestBody BeerOrder body);
 
 }
 

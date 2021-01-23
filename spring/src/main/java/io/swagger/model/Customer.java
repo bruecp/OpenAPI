@@ -15,7 +15,7 @@ import javax.validation.constraints.*;
  */
 @Schema(description = "customer object")
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-01-10T12:00:14.681Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-01-23T11:39:49.576Z[GMT]")
 
 
 public class Customer   {
@@ -40,7 +40,7 @@ public class Customer   {
    * Get id
    * @return id
    **/
-  @Schema(description = "")
+  @Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "")
   
     @Valid
     public UUID getId() {
